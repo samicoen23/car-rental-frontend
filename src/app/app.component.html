@@ -1,0 +1,33 @@
+<nz-header class="main-header custom-navbar" nz-row nzType="flex">
+  <div class="navbar-title">
+    <a routerLink="/login">
+      {{ isAdminLoggedIn ? "LoggedIn Admin" : isCustomerLoggedIn ? "LoggedIn Customer" : "Car Rental Service" }}
+    </a>
+  </div>
+
+  <div class="nav-links">
+    <ng-container *ngIf="isAdminLoggedIn; else customerOrGuest">
+      <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+      <a nz-button nzType="link" routerLink="/admin/car" routerLinkActive="active">Post Car</a>
+      <a nz-button nzType="link" routerLink="/admin/bookings" routerLinkActive="active">Bookings</a>
+      <a nz-button nzType="link" routerLink="/admin/search" routerLinkActive="active">Search</a>
+      <a nz-button nzType="link" (click)="logout()" routerLinkActive="active">Logout</a>
+    </ng-container>
+
+    <ng-template #customerOrGuest>
+      <ng-container *ngIf="isCustomerLoggedIn; else guestNav">
+        <a nz-button nzType="link" routerLink="/customer/dashboard" routerLinkActive="active">Dashboard</a>
+        <a nz-button nzType="link" routerLink="/customer/my_bookings" routerLinkActive="active">My Bookings</a>
+        <a nz-button nzType="link" routerLink="/customer/car/search" routerLinkActive="active">Search Car</a>
+        <a nz-button nzType="link" (click)="logout()" routerLinkActive="active">Logout</a>
+      </ng-container>
+
+      <ng-template #guestNav>
+        <a nz-button nzType="link" routerLink="/register" routerLinkActive="active">Sign up</a>
+        <a nz-button nzType="link" routerLink="/login" routerLinkActive="active">Login</a>
+      </ng-template>
+    </ng-template>
+  </div>
+</nz-header>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,8 @@
+{
+    "/api": {
+      "target": "http://ec2-3-149-252-231.us-east-2.compute.amazonaws.com:8080",
+      "secure": false,
+      "changeOrigin": true
+    }
+  }
+  
