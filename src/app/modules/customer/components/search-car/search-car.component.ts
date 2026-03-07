@@ -39,6 +39,7 @@ export class SearchCarComponent {
 
   searchCar() {
     this.isSpinning = true;
+    this.cars = [];
     this.service.searchCar(this.validateForm.value).subscribe((res) => {
       this.isSpinning = false;
       console.log(res);

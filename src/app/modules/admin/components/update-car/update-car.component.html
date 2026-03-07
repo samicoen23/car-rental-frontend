@@ -19,7 +19,7 @@
                                 <div class="circle-image">
                                     <img [src]="imagePreview" alt="Existing Image" class="preview-image" />
                                 </div>
-                            </div>  
+                            </div>
 
                             <div *ngIf="existingImage" class="image-preview">
                                 <div class="circle-image">
@@ -42,6 +42,20 @@
                             <nz-form-item>
                                 <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
                                     <input nz-input placeholder="Name" formControlName="name" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="24">
+                            <nz-form-item>
+                                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                                    <input nz-input placeholder="Latitude" formControlName="latitude" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="24">
+                            <nz-form-item>
+                                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                                    <input nz-input placeholder="Longitude" formControlName="longitude" />
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
@@ -104,8 +118,8 @@
                         </div>
                     </div>
 
-                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" 
-                    (click)="updateCar()">
+                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+                        (click)="updateCar()" [disabled]="updateForm.invalid">
                         Update
                     </button>
                 </form>

@@ -39,6 +39,20 @@
                         </div>
                         <div nz-col nzSpan="24">
                             <nz-form-item>
+                                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                                    <input nz-input placeholder="Latitude" formControlName="latitude" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="24">
+                            <nz-form-item>
+                                <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This Input Is Required!">
+                                    <input nz-input placeholder="Longitude" formControlName="longitude" />
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+                        <div nz-col nzSpan="24">
+                            <nz-form-item>
                                 <nz-form-control nzErrorTip="This Input Is Required!">
                                     <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a Type"
                                         formControlName="type">
@@ -95,7 +109,7 @@
                         </div>
                     </div>
 
-                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" (click)="postCar()">
+                    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" (click)="postCar()" [disabled]="postCarForm.invalid">
                         Post Car
                     </button>
                 </form>

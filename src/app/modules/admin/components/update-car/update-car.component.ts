@@ -31,8 +31,8 @@ export class UpdateCarComponent {
   listOfType = ["Petrol", "Hybrid", "Diesel", "Electric", "CNG"];
   listOfColor = ["Red", "White", "Blue", "Black", "Orange", "Grey", "Silver"];
   listOfTransmission = ["Manual", "Automatic"];
-  selectedFile: File | null=null;
-  imagePreview: string | ArrayBuffer | null=null;
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
   imageChanged: boolean = false;
   existingImage: string | null = null;
 
@@ -49,6 +49,8 @@ export class UpdateCarComponent {
       price: [null, Validators.required],
       description: [null, Validators.required],
       year: [null, Validators.required],
+      latitude: [null],
+      longitude: [null],
     })
     this.carId = this.activatedRoute.snapshot.params["id"];
     this.getCarById();
@@ -71,18 +73,33 @@ export class UpdateCarComponent {
     console.log(this.updateForm.value);
     this.isSpinning = true;
     const formData: FormData = new FormData();
-    if(this.selectedFile){
-    formData.append('image', this.selectedFile);
-  }
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
     formData.append('brand', this.updateForm.controls['brand'].value);
     formData.append('name', this.updateForm.controls['name'].value);
     formData.append('type', this.updateForm.controls['type'].value);
     formData.append('color', this.updateForm.controls['color'].value);
-    formData.append('year', this.updateForm.controls['year'].value);
+    //formData.append('year', this.updateForm.controls['year'].value);
+    const yearValue = this.updateForm.controls['year'].value;
+    const formattedYear =
+      yearValue instanceof Date ? yearValue.getFullYear() : yearValue;
+    formData.append('year', formattedYear.toString());
     formData.append('transmission', this.updateForm.controls['transmission'].value);
     formData.append('description', this.updateForm.controls['description'].value);
     formData.append('price', this.updateForm.controls['price'].value);
-    console.log(formData); 
+    //formData.append('latitude', this.updateForm.controls['latitude'].value);
+    //formData.append('longitude', this.updateForm.controls['longitude'].value);
+    const lat = this.updateForm.controls['latitude'].value;
+    if (lat !== null && lat !== undefined) {
+      formData.append('latitude', lat.toString());
+    }
+
+    const lng = this.updateForm.controls['longitude'].value;
+    if (lng !== null && lng !== undefined) {
+      formData.append('longitude', lng.toString());
+    }
+    console.log(formData);
     this.adminService.updateCar(this.carId, formData).subscribe((res) => {
       this.isSpinning = false;
       this.message.success("Car updated successfully", { nzDuration: 5000 });
@@ -105,8 +122,8 @@ export class UpdateCarComponent {
     reader.onload = () => {
       this.imagePreview = reader.result;
     }
-    if(this.selectedFile){
-    reader.readAsDataURL(this.selectedFile);
+    if (this.selectedFile) {
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 

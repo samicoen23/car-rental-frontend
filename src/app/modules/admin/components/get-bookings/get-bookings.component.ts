@@ -22,7 +22,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class GetBookingsComponent {
 
   bookings: any;
-  isSpinning = false
+  isSpinning = false;
 
   constructor(private adminService: AdminService, private message: NzMessageService) {
     this.getBookings();

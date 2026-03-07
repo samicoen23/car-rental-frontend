@@ -23,16 +23,16 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class PostCarComponent {
 
   postCarForm!: FormGroup;
-  isSpinning:boolean=false;
-  selectedFile: File | null=null;
-  imagePreview: string | ArrayBuffer | null=null;
+  isSpinning: boolean = false;
+  selectedFile: File | null = null;
+  imagePreview: string | ArrayBuffer | null = null;
   listOfOption: Array<{ label: string; value: string }> = [];
   listOfBrands = ["BMW", "AUDI", "FERRARI", "TESLA", "VOLVO", "TOYOTA", "HONDA", "FORD", "NISSAN", "HYUNDAI", "LEXUS", "KIA"];
   listOfType = ["Petrol", "Hybrid", "Diesel", "Electric", "CNG"];
   listOfColor = ["Red", "White", "Blue", "Black", "Orange", "Grey", "Silver"];
   listOfTransmission = ["Manual", "Automatic"];
 
-  constructor(private fb: FormBuilder, private adminService: AdminService, private message: NzMessageService, private router: Router){}
+  constructor(private fb: FormBuilder, private adminService: AdminService, private message: NzMessageService, private router: Router) { }
 
   ngOnInit() {
     this.postCarForm = this.fb.group({
@@ -44,25 +44,43 @@ export class PostCarComponent {
       price: [null, Validators.required],
       description: [null, Validators.required],
       year: [null, Validators.required],
+      latitude: [null],
+      longitude: [null],
     })
   }
 
-  postCar(){
+  postCar() {
     console.log(this.postCarForm.value);
     this.isSpinning = true;
     const formData: FormData = new FormData();
-    if(this.selectedFile){
-    formData.append('image', this.selectedFile);
-  }
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile);
+    }
     formData.append('brand', this.postCarForm.controls['brand'].value);
     formData.append('name', this.postCarForm.controls['name'].value);
     formData.append('type', this.postCarForm.controls['type'].value);
     formData.append('color', this.postCarForm.controls['color'].value);
-    formData.append('year', this.postCarForm.controls['year'].value);
+    //formData.append('year', this.postCarForm.controls['year'].value);
+    const yearValue = this.postCarForm.controls['year'].value;
+    const formattedYear =
+      yearValue instanceof Date ? yearValue.getFullYear() : yearValue;
+    formData.append('year', formattedYear.toString());
+
     formData.append('transmission', this.postCarForm.controls['transmission'].value);
     formData.append('description', this.postCarForm.controls['description'].value);
     formData.append('price', this.postCarForm.controls['price'].value);
-    console.log(formData); 
+    //formData.append('latitude', this.postCarForm.controls['latitude'].value);
+    //formData.append('longitude', this.postCarForm.controls['longitude'].value);
+    const lat = this.postCarForm.controls['latitude'].value;
+    if (lat !== null && lat !== undefined) {
+      formData.append('latitude', lat.toString());
+    }
+
+    const lng = this.postCarForm.controls['longitude'].value;
+    if (lng !== null && lng !== undefined) {
+      formData.append('longitude', lng.toString());
+    }
+    console.log(formData);
     this.adminService.postCar(formData).subscribe((res) => {
       this.isSpinning = false;
       this.message.success("Car posted successfully", { nzDuration: 5000 });
@@ -72,7 +90,7 @@ export class PostCarComponent {
       this.message.error("Error while posting car", { nzDuration: 5000 });
     })
   }
-  
+
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
     this.previewImage();
@@ -83,8 +101,8 @@ export class PostCarComponent {
     reader.onload = () => {
       this.imagePreview = reader.result;
     }
-    if(this.selectedFile){
-    reader.readAsDataURL(this.selectedFile);
+    if (this.selectedFile) {
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 }

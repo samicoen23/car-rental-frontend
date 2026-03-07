@@ -39,22 +39,22 @@ export class SearchCarComponent {
   }
 
   searchCar() {
+    this.cars = [];
     this.isSpinning = true;
     this.adminService.searchCar(this.validateForm.value).subscribe((res) => {
       this.isSpinning = false;
       console.log(res);
       res.carDtoList.forEach((element: { processedImg: string; returnedImage: string; }) => {
-        element.processedImg = 'data:image/jpeg;base64,' + element.returnedImage; 
+        element.processedImg = 'data:image/jpeg;base64,' + element.returnedImage;
         this.cars.push(element);
       });
     })
   }
 
-  deleteCar(id:number){
-    this.cars=[];
+  deleteCar(id: number) {
     this.adminService.deleteCar(id).subscribe((res) => {
       this.message.success("Car deleted successfully", { nzDuration: 5000 });
-      this.searchCar();
+      this.cars = this.cars.filter((car: any) => car.id !== id);
     })
   }
 
