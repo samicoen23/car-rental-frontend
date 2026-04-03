@@ -23,16 +23,16 @@ export class SignupComponent {
   isSpinning: boolean = false;
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService:AuthService, private message:NzMessageService, private router:Router) {
-    
+  constructor(private fb: FormBuilder, private authService: AuthService, private message: NzMessageService, private router: Router) {
+
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.signupForm = this.fb.group({
-      name:[null,[Validators.required]],
-      email:[null,[Validators.required, Validators.email]],
-      password:[null,[Validators.required]],
-      checkPassword:[null,[Validators.required, this.confirmationValidate]]
+      name: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required]],
+      checkPassword: [null, [Validators.required, this.confirmationValidate]]
     })
   }
 
@@ -45,16 +45,33 @@ export class SignupComponent {
     return {};
   };
 
-  register(){
+  register() {
     console.log(this.signupForm.value);
-    this.authService.register(this.signupForm.value).subscribe((res) => {
-      console.log(res);
-      if(res.id !=null){
-        this.message.success("Signup successful", {nzDuration: 5000 });
-        this.router.navigateByUrl("/login")
-      } else{
-        this.message.error("Something went wrong", {nzDuration: 5000 });
+    this.authService.register(this.signupForm.value).subscribe({
+      next: (res) => {
+        if (res.id != null) {
+          this.message.success("Signup successful", { nzDuration: 5000 });
+          this.router.navigateByUrl("/login")
+        } else {
+          this.message.error("Something went wrong", { nzDuration: 5000 });
+        }
+      },
+      error: (err) => {
+        if (err.status === 400) {
+          this.message.error("This email is already registered.");
+        } else {
+          this.message.error("An unexpected error occurred.");
+        }
       }
-    })
+    });
+    // this.authService.register(this.signupForm.value).subscribe((res) => {
+    //   console.log(res);
+    //   if(res.id !=null){
+    //     this.message.success("Signup successful", {nzDuration: 5000 });
+    //     this.router.navigateByUrl("/login")
+    //   } else{
+    //     this.message.error("Something went wrong", {nzDuration: 5000 });
+    //   }
+    // });
   }
 }

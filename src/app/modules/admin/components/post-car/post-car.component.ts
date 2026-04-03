@@ -81,14 +81,17 @@ export class PostCarComponent {
       formData.append('longitude', lng.toString());
     }
     console.log(formData);
-    this.adminService.postCar(formData).subscribe((res) => {
-      this.isSpinning = false;
-      this.message.success("Car posted successfully", { nzDuration: 5000 });
-      this.router.navigateByUrl("/admin/dashboard");
-      console.log(res);
-    }, error => {
-      this.message.error("Error while posting car", { nzDuration: 5000 });
-    })
+    this.adminService.postCar(formData).subscribe({
+      next: (res) => {
+        this.isSpinning = false;
+        this.message.success("Car posted successfully", { nzDuration: 5000 });
+        this.router.navigateByUrl("/admin/dashboard");
+        console.log(res);
+      }, error: (err) => {
+        this.isSpinning = false;
+        this.message.error("Error while posting car", { nzDuration: 5000 });
+      }
+    });
   }
 
   onFileSelected(event: any) {

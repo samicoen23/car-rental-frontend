@@ -5,7 +5,8 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withFetch} from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
+import { authInterceptor } from './auth/services/interceptor/auth.interceptor';
 
 
 
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(en_US), 
     importProvidersFrom(), 
     provideAnimationsAsync(), 
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptors([authInterceptor]))
   ]
 };

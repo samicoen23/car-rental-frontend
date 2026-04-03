@@ -100,14 +100,17 @@ export class UpdateCarComponent {
       formData.append('longitude', lng.toString());
     }
     console.log(formData);
-    this.adminService.updateCar(this.carId, formData).subscribe((res) => {
-      this.isSpinning = false;
-      this.message.success("Car updated successfully", { nzDuration: 5000 });
-      this.router.navigateByUrl("/admin/dashboard");
-      console.log(res);
-    }, error => {
-      this.message.error("Error while updating car", { nzDuration: 5000 });
-    })
+    this.adminService.updateCar(this.carId, formData).subscribe({
+      next: (res) => {
+        this.isSpinning = false;
+        this.message.success("Car updated successfully", { nzDuration: 5000 });
+        this.router.navigateByUrl("/admin/dashboard");
+        console.log(res);
+      }, error: (err) => {
+        this.isSpinning = false;
+        this.message.error("Error while updating car", { nzDuration: 5000 });
+      }
+    });
   }
 
   onFileSelected(event: any) {

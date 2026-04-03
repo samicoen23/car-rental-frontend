@@ -14,59 +14,34 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   postCar(carDto: any): Observable<any> {
-    return this.http.post(BASIC_URL + "/api/admin/car", carDto, {
-      headers: this.createAuthorizationHeader()
-    });
-
+    return this.http.post(BASIC_URL + "/api/admin/car", carDto);
   }
 
   getAllCars(): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/admin/cars", {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + "/api/admin/cars");
   }
 
   deleteCar(id: number): Observable<any> {
-    return this.http.delete(BASIC_URL + "/api/admin/car/" + id, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.delete(BASIC_URL + "/api/admin/car/" + id);
   }
 
   getCarById(id: number): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/admin/car/" + id, {
-      headers: this.createAuthorizationHeader() 
-    })
+    return this.http.get(BASIC_URL + "/api/admin/car/" + id);
   }
 
   updateCar(carId: number, carDto: any) {
-    return this.http.put(BASIC_URL + "/api/admin/car/" + carId, carDto, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.put(BASIC_URL + "/api/admin/car/" + carId, carDto);
   }
 
   getCarBookings(): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/admin/car/bookings", {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + "/api/admin/car/bookings");
   }
 
   changeBookingStatus(bookingId: number, status: string): Observable<any> {
-    return this.http.get(BASIC_URL + `/api/admin/car/booking/${bookingId}/${status}`, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + `/api/admin/car/booking/${bookingId}/${status}`);
   }
 
   searchCar(searchCarDto: any): Observable<any> {
-    return this.http.post(BASIC_URL + `/api/admin/car/search`, searchCarDto, {
-      headers: this.createAuthorizationHeader()
-    })
-  }
-
-  createAuthorizationHeader(): HttpHeaders {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    return authHeaders.set(
-      'Authorization',
-      'Bearer ' + StorageService.getToken()
-    );
+    return this.http.post(BASIC_URL + `/api/admin/car/search`, searchCarDto);
   }
 }

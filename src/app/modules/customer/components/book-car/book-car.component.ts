@@ -63,14 +63,17 @@ export class BookCarComponent {
       userId: StorageService.getUserId(),
       carId: this.carId
     }
-    this.customerService.bookACar(obj).subscribe((res) => {
-      this.isSpinning = false;
-      console.log(res);
-      this.message.success("Car booked successfully", { nzDuration: 5000 });
-      this.router.navigateByUrl("/customer/dashboard");
-    }, error => {
-      this.message.error("Something went wrong", { nzDuration: 5000 });
-    })
+    this.customerService.bookACar(obj).subscribe({
+      next: (res) => {
+        this.isSpinning = false;
+        console.log(res);
+        this.message.success("Car booked successfully", { nzDuration: 5000 });
+        this.router.navigateByUrl("/customer/dashboard");
+      }, error: (err) => {
+        this.isSpinning = false;
+        this.message.error("Something went wrong", { nzDuration: 5000 });
+      }
+    });
   }
 
 }

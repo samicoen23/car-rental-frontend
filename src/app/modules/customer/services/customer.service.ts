@@ -13,40 +13,23 @@ export class CustomerService {
   constructor(private http: HttpClient) { }
 
   getAllCars(): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/customer/cars", {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + "/api/customer/cars");
   }
 
   getCarById(carId: number): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/customer/car/" + carId, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + "/api/customer/car/" + carId);
   }
 
   bookACar(bookACarDto: any): Observable<any> {
-    return this.http.post(BASIC_URL + "/api/customer/car/book", bookACarDto, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.post(BASIC_URL + "/api/customer/car/book", bookACarDto);
   }
 
   getBookingsByUserId(): Observable<any> {
-    return this.http.get(BASIC_URL + "/api/customer/car/bookings/" + StorageService.getUserId(), {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.get(BASIC_URL + "/api/customer/car/bookings/" + StorageService.getUserId());
   }
 
   searchCar(searchCarDto: any): Observable<any> {
-    return this.http.post(BASIC_URL + `/api/customer/car/search`, searchCarDto, {
-      headers: this.createAuthorizationHeader()
-    })
+    return this.http.post(BASIC_URL + `/api/customer/car/search`, searchCarDto);
   }
 
-  createAuthorizationHeader(): HttpHeaders {
-    let authHeaders: HttpHeaders = new HttpHeaders();
-    return authHeaders.set(
-      'Authorization',
-      'Bearer ' + StorageService.getToken()
-    );
-  }
 }

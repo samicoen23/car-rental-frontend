@@ -40,14 +40,21 @@ export class GetBookingsComponent {
   changeBookingStatus(bookingId: number, status: string) {
     this.isSpinning = true;
     console.log(bookingId, status);
-    this.adminService.changeBookingStatus(bookingId, status).subscribe((res) => {
-      this.isSpinning = false;
-      console.log(res);
-      this.getBookings();
-      this.message.success("Status changed successfully", { nzDuration: 5000 });
-    }, error => {
-      this.message.error("Something went wrong", { nzDuration: 5000 });
-    })
+    this.adminService.changeBookingStatus(bookingId, status).subscribe({
+      next: (res) => {
+        this.isSpinning = false;
+        console.log(res);
+        const booking = this.bookings.find((b: any) => b.id === bookingId);
+        if (booking) {
+          booking.bookCarStatus = status;
+        }
+        //this.getBookings();
+        this.message.success("Status changed successfully", { nzDuration: 5000 });
+      }, error: (err) => {
+        this.isSpinning = false;
+        this.message.error("Something went wrong", { nzDuration: 5000 });
+      }
+    });
   }
 
 }

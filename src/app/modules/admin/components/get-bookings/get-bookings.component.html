@@ -30,9 +30,9 @@
 
                     <span *ngIf="booking.bookCarStatus == 'PENDING'">
                         <button style="margin-left: 10px;" nzSize="small" nz-button nzType="primary"
-                            (click)="changeBookingStatus(booking.id,'Approve')">Approve</button>
+                            (click)="changeBookingStatus(booking.id,'APPROVED')">Approve</button>
                         <button style="margin-left: 10px;" nzSize="small" nz-button nzType="primary"
-                            (click)="changeBookingStatus(booking.id,'Reject')" nzDanger>Reject</button>
+                            (click)="changeBookingStatus(booking.id,'REJECTED')" nzDanger>Reject</button>
                     </span>
 
                 </td>

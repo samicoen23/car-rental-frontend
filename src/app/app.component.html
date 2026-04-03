@@ -1,10 +1,11 @@
 <nz-header class="main-header custom-navbar" nz-row nzType="flex">
   <div class="navbar-title">
-    <a routerLink="/login">
+    <!-- Use square brackets to make the link dynamic -->
+    <a [routerLink]="isAdminLoggedIn ? '/admin/dashboard' : isCustomerLoggedIn ? '/customer/dashboard' : '/login'">
       {{ isAdminLoggedIn ? "LoggedIn Admin" : isCustomerLoggedIn ? "LoggedIn Customer" : "Car Rental Service" }}
     </a>
   </div>
-
+  
   <div class="nav-links">
     <ng-container *ngIf="isAdminLoggedIn; else customerOrGuest">
       <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
