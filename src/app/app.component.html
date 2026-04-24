@@ -1,11 +1,11 @@
 <nz-header class="main-header custom-navbar" nz-row nzType="flex">
   <div class="navbar-title">
     <!-- Use square brackets to make the link dynamic -->
-    <a [routerLink]="isAdminLoggedIn ? '/admin/dashboard' : isCustomerLoggedIn ? '/customer/dashboard' : '/login'">
-      {{ isAdminLoggedIn ? "LoggedIn Admin" : isCustomerLoggedIn ? "LoggedIn Customer" : "Car Rental Service" }}
+    <a [routerLink]="isAdminLoggedIn ? '/admin/dashboard' : isCustomerLoggedIn ? '/customer/dashboard' : '/'">
+      {{ isAdminLoggedIn ? 'Admin: ' + getUserName() : isCustomerLoggedIn ? 'Welcome, ' + getUserName() : 'Car Rental Service' }}
     </a>
   </div>
-  
+
   <div class="nav-links">
     <ng-container *ngIf="isAdminLoggedIn; else customerOrGuest">
       <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
@@ -30,5 +30,10 @@
     </ng-template>
   </div>
 </nz-header>
+
+<div *ngIf="!isAdminLoggedIn && !isCustomerLoggedIn" class="welcome-container">
+  <h1 nz-typography>Welcome to our page!</h1>
+  <p>We're glad you're here. Join our community to get started.</p>
+</div>
 
 <router-outlet></router-outlet>

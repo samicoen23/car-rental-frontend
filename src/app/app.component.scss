@@ -1,11 +1,11 @@
-.custom-navbar{
+.custom-navbar {
     background-color: #003973;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
 
-    .navbar-title{
+    .navbar-title {
         >a {
             color: white !important;
             margin-left: 10px;
@@ -13,7 +13,8 @@
             font-weight: bolder;
         }
     }
-    .nav-links{
+
+    .nav-links {
         display: flex;
         align-items: center;
 
@@ -22,4 +23,12 @@
             margin-left: 15px;
         }
     }
+}
+
+.welcome-container {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: white;
+    /* Light background to distinguish from header */
+    border-bottom: 1px solid white;
 }

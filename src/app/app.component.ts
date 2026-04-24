@@ -52,8 +52,14 @@ export class AppComponent {
   logout() {
     StorageService.logout();
     StorageService.loggedInSubject$.next(false);
-    this.router.navigateByUrl("/login");
+    this.router.navigateByUrl("/");
   }
+
+  getUserName(): string {
+    const user = StorageService.getUser();
+    return user.name || 'User'; // Fallback to 'User' if name isn't found
+  }
+
 }
-  
+
 
